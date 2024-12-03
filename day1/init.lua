@@ -1,3 +1,5 @@
+local lfs = require("lfs")
+
 ---Prints the tables and the corresponding differences and number of occurrences of the first table
 ---@param table1 table: First row
 ---@param table2 table: Second row
@@ -79,11 +81,13 @@ local function part2()
 end
 
 ---@type string
-local fileName = arg[2] or "day1/defaultInput.txt"
-if fileName == "default" then fileName = "day1/defaultInput.txt" end
+local fileName = arg[2] or "defaultInput.txt"
+if fileName == "default" then fileName = "defaultInput.txt" end
+local file = io.open(lfs.currentdir() .. "/" .. fileName, "r")
+
 ---@type string
 local debug = arg[3]
-local file = io.open(fileName, "r")
+
 if file ~= nil then
     ---@type integer
     local result1 = part1(file)

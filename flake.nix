@@ -16,6 +16,7 @@
             pkgs.mkShell {
                 packages = with pkgs; [
                     lua
+                    lua52Packages.luafilesystem
                 ];
             };
     };
