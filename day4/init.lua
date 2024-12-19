@@ -1,5 +1,9 @@
 local lfs = require("lfs")
 
+---Counts the number of occurences of certain strings
+---@param line string: Text where the strings can be found
+---@param objective table: List with the strings
+---@return integer: The number of occurences of the strings
 local count = function(line, objective)
 	---@type integer
 	local sum = 0
@@ -10,6 +14,10 @@ local count = function(line, objective)
 	return sum
 end
 
+---Counts the number of occurrences of strings in the upper diagonal
+---@param lines table: List of each line
+---@param objective table: List with the strings
+---@return integer: The number of occurences of the strings
 local countUpperDiagonals = function(lines, objective)
 	---@type integer
 	local sum = 0
@@ -30,6 +38,10 @@ local countUpperDiagonals = function(lines, objective)
 	return sum
 end
 
+---Counts the number of occurrences of strings in the lower diagonal
+---@param lines table: List of each line
+---@param objective table: List with the strings
+---@return integer: The number of occurences of the strings
 local countLowerDiagonals = function(lines, objective)
 	---@type integer
 	local sum = 0
@@ -50,6 +62,9 @@ local countLowerDiagonals = function(lines, objective)
 	return sum
 end
 
+---Solves the first problem
+---@param lines table: List of the lines
+---@return integer: Result
 local part1 = function(lines)
 	---@type table
 	local objective = {"XMAS", "SAMX"}
@@ -76,6 +91,9 @@ local part1 = function(lines)
 	return sum
 end
 
+---Verifies if a character is either "A" or "X"
+---@param character string: A character
+---@return boolean: The result
 local isXorA = function(character)
 	if character == "A" or character == "X" then
 		return true
@@ -84,6 +102,11 @@ local isXorA = function(character)
 	return false
 end
 
+---Verifies if a character is the middle of a valid cross
+---@param lines table: List of all the lines
+---@param line integer: The number of the line
+---@param column integer: The number of the column
+---@return boolean: The result
 local validXmas = function(lines, line, column)
 	---@type string
 	local character = lines[line]:sub(column, column)
@@ -96,7 +119,6 @@ local validXmas = function(lines, line, column)
 	---@type string
 	local bottomRight = lines[line + 1]:sub(column + 1, column + 1)
 
-
 	if character ~= "A" then
 		return false
 	end
@@ -106,15 +128,12 @@ local validXmas = function(lines, line, column)
 		return false
 	end
 
-	print(
-		topLeft .. " " .. topRight
-		.. "\n" .. " A " .. "\n" ..
-		bottomLeft .. " " .. bottomRight .. "\n"
-	)
-
 	return true
 end
 
+---Solves the second problem
+---@param lines table: List of all the lines
+---@return integer: The result
 local part2 = function(lines)
 	---@type integer
 	local sum = 0
