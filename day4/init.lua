@@ -159,6 +159,8 @@ if file ~= nil then
 
 	---@type integer
 	local result1, result2 = part1(lines), part2(lines)
+	file:close()
+	
 	print("Part 1: " .. result1)
 	print("Part 2: " .. result2)
 else print("Failed wasn't loaded successfully.")

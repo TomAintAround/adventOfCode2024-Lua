@@ -83,7 +83,7 @@ end
 ---@type string
 local fileName = arg[2] or "defaultInput.txt"
 if fileName == "default" then fileName = "defaultInput.txt" end
-local file = io.open(lfs.currentdir() .. "/" .. fileName, "r")
+local file = io.open(lfs.currentdir() .. "/day1/" .. fileName, "r")
 
 ---@type string
 local debug = arg[3]

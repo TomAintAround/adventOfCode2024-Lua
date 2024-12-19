@@ -143,6 +143,7 @@ if file ~= nil then
 
 	---@type integer
 	local result1, result2 = part1(lines), part2(lines)
+	file:close()
 
 	if debug == "True" then
 		debugExercise(lines, Safeness1, Safeness2)

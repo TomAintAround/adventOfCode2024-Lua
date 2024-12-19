@@ -68,6 +68,7 @@ if file ~= nil then
 	local text = file:read("*all")
 	---@type integer
 	local result1, result2 = part1(text), part2(text)
+	file:close()
 
 	print("Part 1: " .. result1)
 	print("Part 2: " .. result2)
