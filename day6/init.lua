@@ -56,6 +56,7 @@ local guardInfo = function(lines, guardSprites)
 				end
 			end
 		end
+	---@diagnostic disable-next-line
 	end
 end
 
