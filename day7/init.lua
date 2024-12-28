@@ -1,25 +1,30 @@
 local lfs = require("lfs")
-local bit = require("bit")
 
 ---Tests if the equation could be valid
 ---@param result number?: The result of the equation
 ---@param values table: All the values
+---@param base integer: Number of operators
 ---@return boolean: Whether the equation could be valid
-local testValues = function(result, values)
-	-- if there are 3 values, this variable will be 0b11
+local testValues = function(result, values, base)
 	---@type integer
-	local maximumPossibilities = bit.lshift(1, #values - 1) - 1
+	local maximumPossibilities = base ^ (#values - 1)
 	---@type integer
 	local state = 0
 
-	while state <= maximumPossibilities do
+	while state < maximumPossibilities do
 		---@type integer
 		local testResult = values[1]
 		for number = 2, #values, 1 do
-			if bit.band(bit.rshift(state, number - 2), 1) == 0 then
+			---@type integer
+			local digit = math.floor(state / base ^ (number - 2)) % base
+			if digit == 0 then
 				testResult = testResult + values[number]
-			else
+			elseif digit == 1 then
 				testResult = testResult * values[number]
+			else -- this will never be run if the base is 2
+				---@type integer
+				local jump = values[number]:len()
+				testResult = testResult * 10 ^ jump + values[number]
 			end
 		end
 		if testResult == result then
@@ -31,10 +36,11 @@ local testValues = function(result, values)
 	return false
 end
 
----Solves the first proble,
----@param lines table: Table with all the lines of the input
----@return number: The result
-local part1 = function(lines)
+---Sums the correct equations
+---@param lines table: Every line of the input
+---@param base integer: The number of operators used
+---@return integer: The sum
+local sumCorrectEquations = function(lines, base)
 	---@type integer
 	local sum = 0
 	for line = 1, #lines, 1 do
@@ -46,17 +52,12 @@ local part1 = function(lines)
 			table.insert(values, number)
 		end
 
-		if testValues(result, values) then
+		if testValues(result, values, base) then
 			sum = sum + result
 		end
 	end
 
 	return sum
-end
-
--- TODO
-local part2 = function()
-	return -1
 end
 
 ---@type string
@@ -72,12 +73,10 @@ if file ~= nil then
 		table.insert(lines, line)
 	end
 
-	---@type integer
-	local result1, result2 = part1(lines), part2()
+	print("Part 1: " .. sumCorrectEquations(lines, 2))
+	-- Without this hack, the number will be printed like this: 2.0e+12 (example)
+	print(string.format("Part 2: %.0f", sumCorrectEquations(lines, 3)))
 	file:close()
-
-	print("Part 1: " .. result1)
-	print("Part 2: " .. result2)
 else
 	print("File wasn't loaded successfully")
 end

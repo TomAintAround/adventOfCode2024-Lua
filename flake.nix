@@ -17,7 +17,6 @@
 				packages = with pkgs; [
 					lua
 					lua52Packages.luafilesystem
-					lua52Packages.luabitop
 				];
 			};
 	};
